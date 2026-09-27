@@ -5,6 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "dev:candidate": "vite --port 3000 --mode candidate",
+    "dev:interviewer": "vite --port 3001 --mode interviewer",
     "build": "vite build",
     "lint": "oxlint",
     "preview": "vite preview"
@@ -12,7 +14,8 @@
   "dependencies": {
     "lucide-react": "^1.48.0",
     "react": "^19.2.8",
-    "react-dom": "^19.2.8"
+    "react-dom": "^19.2.8",
+    "socket.io-client": "^4.8.4"
   },
   "devDependencies": {
     "@types/react": "^19.2.18",
