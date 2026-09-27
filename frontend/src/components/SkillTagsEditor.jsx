@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Tag, Plus, X, ArrowRight, User, Mail, FileText, Sparkles, AlertCircle } from 'lucide-react';
+import { Tag, Plus, X, ArrowUpRight, User, Mail, FileText, Sparkles, AlertCircle } from 'lucide-react';
 
 const COMMON_SUGGESTIONS = [
   'Python', 'React', 'Node.js', 'Machine Learning', 'Computer Vision',
@@ -20,7 +20,6 @@ export default function SkillTagsEditor({
     const trimmed = (skillToAdd || newSkillInput).trim();
     if (!trimmed) return;
 
-    // Check if not already in list (case insensitive)
     const exists = skills.some(s => s.toLowerCase() === trimmed.toLowerCase());
     if (!exists) {
       onUpdateSkills([...skills, trimmed]);
@@ -39,78 +38,55 @@ export default function SkillTagsEditor({
     }
   };
 
-  // Filter suggestions to those not yet added
   const remainingSuggestions = COMMON_SUGGESTIONS.filter(
     s => !skills.some(c => c.toLowerCase() === s.toLowerCase())
   ).slice(0, 8);
 
   return (
-    <div style={{ maxWidth: '820px', margin: '40px auto' }}>
-      <div className="card" style={{ border: '1.5px solid #bfdbfe' }}>
+    <div style={{ maxWidth: '860px', margin: '40px auto', padding: '0 20px' }}>
+      <div className="card" style={{ padding: '36px 36px 30px 36px', boxShadow: 'var(--shadow-lg)' }}>
         {/* Header */}
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: '1px solid #e2e8f0', paddingBottom: '18px', marginBottom: '22px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: '1px solid var(--border)', paddingBottom: '20px', marginBottom: '24px' }}>
           <div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-              <span className="badge badge-green">CV Parsed Successfully</span>
-              <span style={{ fontSize: '0.82rem', color: '#64748b' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px' }}>
+              <span className="badge badge-forest">CV Parsed Successfully</span>
+              <span style={{ fontSize: '0.82rem', color: 'var(--text-muted)' }}>
                 {candidate.originalFileName || 'Resume.pdf'}
               </span>
             </div>
-            <h2 style={{ fontSize: '1.45rem', fontWeight: 800, color: '#0f172a', marginTop: '6px' }}>
-              Your Extracted Candidate Profile
+            <h2 style={{ fontFamily: 'var(--font-serif)', fontSize: '2rem', fontWeight: 500, color: '#111111', margin: 0 }}>
+              Candidate Competencies Dossier
             </h2>
-            <p style={{ fontSize: '0.88rem', color: '#64748b', marginTop: '2px' }}>
-              Review and adjust your technical profile below before we calculate vacancy matches.
+            <p style={{ fontSize: '0.9rem', color: '#57534E', marginTop: '4px' }}>
+              Verify your parsed profile and technical proficiencies before alignment calculation.
             </p>
-          </div>
-          <div style={{ textAlign: 'right' }}>
-            <span style={{ fontSize: '1.8rem', fontWeight: 800, color: '#008bdc' }}>
-              {skills.length}
-            </span>
-            <div style={{ fontSize: '0.75rem', color: '#64748b', fontWeight: 600 }}>
-              Skills Identified
-            </div>
           </div>
         </div>
 
-        {/* Candidate Info Fields */}
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px', marginBottom: '24px' }}>
+        {/* Candidate Basic Info */}
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px', marginBottom: '24px' }}>
           <div>
-            <label style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '0.82rem', fontWeight: 700, color: '#475569', marginBottom: '6px' }}>
-              <User size={14} color="#008bdc" /> Full Name
+            <label style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '0.82rem', fontWeight: 600, color: '#111111', marginBottom: '6px' }}>
+              <User size={14} color="var(--forest-green)" /> Full Name
             </label>
             <input
               type="text"
+              className="form-input"
               value={candidate.name || ''}
               onChange={(e) => onUpdateCandidate({ ...candidate, name: e.target.value })}
-              style={{
-                width: '100%',
-                padding: '10px 14px',
-                borderRadius: '8px',
-                border: '1px solid #cbd5e1',
-                outline: 'none',
-                fontWeight: 600
-              }}
-              placeholder="e.g. Full Name"
+              placeholder="e.g. Candidate Name"
             />
           </div>
 
           <div>
-            <label style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '0.82rem', fontWeight: 700, color: '#475569', marginBottom: '6px' }}>
-              <Mail size={14} color="#008bdc" /> Email Address
+            <label style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '0.82rem', fontWeight: 600, color: '#111111', marginBottom: '6px' }}>
+              <Mail size={14} color="var(--forest-green)" /> Email Address
             </label>
             <input
               type="email"
+              className="form-input"
               value={candidate.email || ''}
               onChange={(e) => onUpdateCandidate({ ...candidate, email: e.target.value })}
-              style={{
-                width: '100%',
-                padding: '10px 14px',
-                borderRadius: '8px',
-                border: '1px solid #cbd5e1',
-                outline: 'none',
-                fontWeight: 600
-              }}
               placeholder="e.g. candidate@example.com"
             />
           </div>
@@ -119,10 +95,10 @@ export default function SkillTagsEditor({
         {/* Editable Skills Section */}
         <div style={{ marginBottom: '24px' }}>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '10px' }}>
-            <label style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '0.86rem', fontWeight: 700, color: '#0f172a' }}>
-              <Tag size={16} color="#008bdc" /> Extracted Skill Tags
+            <label style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '0.86rem', fontWeight: 600, color: '#111111' }}>
+              <Tag size={15} color="var(--forest-green)" /> Extracted Competency Tags ({skills.length})
             </label>
-            <span style={{ fontSize: '0.78rem', color: '#64748b' }}>
+            <span style={{ fontSize: '0.78rem', color: 'var(--text-muted)' }}>
               Click (×) to remove or type to add more
             </span>
           </div>
@@ -131,10 +107,10 @@ export default function SkillTagsEditor({
           <div
             style={{
               minHeight: '80px',
-              padding: '14px',
-              borderRadius: '12px',
-              border: '1px solid #cbd5e1',
-              backgroundColor: '#f8fafc',
+              padding: '16px',
+              borderRadius: 'var(--radius-md)',
+              border: '1.5px solid var(--border)',
+              backgroundColor: 'var(--bg-card-warm)',
               display: 'flex',
               flexWrap: 'wrap',
               gap: '8px',
@@ -142,7 +118,7 @@ export default function SkillTagsEditor({
             }}
           >
             {skills.length === 0 ? (
-              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#94a3b8', fontSize: '0.88rem' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--text-muted)', fontSize: '0.88rem' }}>
                 <AlertCircle size={16} />
                 No skills detected automatically. Please add your key skills below to find matches.
               </div>
@@ -150,24 +126,35 @@ export default function SkillTagsEditor({
               skills.map((skill) => (
                 <span
                   key={skill}
-                  className="tag-chip active"
                   style={{
-                    backgroundColor: '#e0f2fe',
-                    color: '#0369a1',
-                    border: '1px solid #bae6fd',
+                    backgroundColor: 'var(--bg-subtle)',
+                    color: '#111111',
+                    border: '1px solid var(--border)',
                     padding: '6px 12px',
-                    borderRadius: '8px',
-                    fontSize: '0.9rem',
-                    fontWeight: 600
+                    borderRadius: 'var(--radius-full)',
+                    fontSize: '0.88rem',
+                    fontWeight: 600,
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '6px'
                   }}
                 >
                   {skill}
                   <span
-                    className="tag-chip-remove"
                     onClick={() => handleRemoveSkill(skill)}
+                    style={{
+                      cursor: 'pointer',
+                      borderRadius: '50%',
+                      width: '16px',
+                      height: '16px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      background: 'rgba(0,0,0,0.06)'
+                    }}
                     title={`Remove ${skill}`}
                   >
-                    <X size={12} />
+                    <X size={11} />
                   </span>
                 </span>
               ))
@@ -179,32 +166,27 @@ export default function SkillTagsEditor({
         <div style={{ display: 'flex', gap: '10px', marginBottom: '18px' }}>
           <input
             type="text"
+            className="form-input"
             value={newSkillInput}
             onChange={(e) => setNewSkillInput(e.target.value)}
             onKeyDown={handleKeyDown}
             placeholder="Type any skill (e.g. PyTorch, React, Kubernetes) and press Enter"
-            style={{
-              flex: 1,
-              padding: '10px 14px',
-              borderRadius: '8px',
-              border: '1px solid #cbd5e1',
-              outline: 'none'
-            }}
           />
           <button
             type="button"
             className="btn btn-outline"
             onClick={() => handleAddSkill()}
+            style={{ padding: '0 20px', flexShrink: 0 }}
           >
-            <Plus size={16} /> Add Skill
+            <Plus size={16} /> Add Tag
           </button>
         </div>
 
         {/* Quick Add Suggestions */}
         {remainingSuggestions.length > 0 && (
           <div style={{ marginBottom: '28px' }}>
-            <span style={{ fontSize: '0.78rem', color: '#64748b', fontWeight: 600, marginRight: '8px' }}>
-              Quick Suggestions:
+            <span style={{ fontSize: '0.78rem', color: 'var(--text-muted)', fontWeight: 600, marginRight: '8px' }}>
+              Suggested Additions:
             </span>
             <div style={{ display: 'inline-flex', flexWrap: 'wrap', gap: '6px', marginTop: '6px' }}>
               {remainingSuggestions.map((suggestion) => (
@@ -213,13 +195,14 @@ export default function SkillTagsEditor({
                   type="button"
                   onClick={() => handleAddSkill(suggestion)}
                   style={{
-                    fontSize: '0.75rem',
-                    background: '#f1f5f9',
-                    border: '1px solid #cbd5e1',
-                    borderRadius: '6px',
-                    padding: '3px 8px',
-                    color: '#334155',
-                    cursor: 'pointer'
+                    fontSize: '0.76rem',
+                    background: 'var(--bg-subtle)',
+                    border: '1px solid var(--border)',
+                    borderRadius: 'var(--radius-full)',
+                    padding: '4px 10px',
+                    color: '#111111',
+                    cursor: 'pointer',
+                    fontWeight: 500
                   }}
                 >
                   + {suggestion}
@@ -230,17 +213,17 @@ export default function SkillTagsEditor({
         )}
 
         {/* Bottom CTA */}
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderTop: '1px solid #e2e8f0', paddingTop: '20px' }}>
-          <div style={{ fontSize: '0.82rem', color: '#64748b' }}>
-            AI relevance engine will compare your {skills.length} skills with all advertised posts
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderTop: '1px solid var(--border)', paddingTop: '20px' }}>
+          <div style={{ fontSize: '0.84rem', color: 'var(--text-muted)' }}>
+            Semantic engine will match {skills.length} competencies against board vacancies
           </div>
           <button
             type="button"
             className="btn btn-primary"
-            style={{ padding: '12px 28px', fontSize: '1rem' }}
+            style={{ padding: '12px 28px', fontSize: '0.96rem' }}
             onClick={onProceed}
           >
-            Find Matching Vacancies <ArrowRight size={18} />
+            Find Matching Vacancies <ArrowUpRight size={16} />
           </button>
         </div>
       </div>

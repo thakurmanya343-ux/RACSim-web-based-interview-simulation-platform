@@ -69,30 +69,34 @@ export default function AuditReportView({ candidate }) {
   );
 
   return (
-    <div style={{ maxWidth: '1060px', margin: '30px auto' }}>
+    <div style={{ maxWidth: '1060px', margin: '30px auto', padding: '0 20px' }}>
       {/* Top Banner */}
       <div
         style={{
-          background: 'linear-gradient(135deg, #0f172a 0%, #1e40af 100%)',
-          borderRadius: '16px',
-          padding: '24px 30px',
+          background: '#111111',
+          borderRadius: 'var(--radius-xl)',
+          padding: '28px 32px',
           color: '#ffffff',
           marginBottom: '24px',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
           flexWrap: 'wrap',
-          gap: '16px'
+          gap: '16px',
+          boxShadow: 'var(--shadow-lg)'
         }}
       >
         <div>
-          <span className="badge badge-blue" style={{ background: 'rgba(255,255,255,0.2)', color: '#fff', marginBottom: '6px' }}>
-            Board Room Final Evaluation
-          </span>
-          <h2 style={{ fontSize: '1.65rem', fontWeight: 800, margin: 0 }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px' }}>
+            <span className="pulse-dot-green" />
+            <span style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--forest-green-border)', textTransform: 'uppercase', letterSpacing: '0.14em' }}>
+              Board Room Evaluation Dossier
+            </span>
+          </div>
+          <h2 style={{ fontFamily: 'var(--font-serif)', fontSize: '1.9rem', fontWeight: 500, color: '#ffffff', margin: 0 }}>
             Evaluation Dossier & Expert Consistency Audit
           </h2>
-          <p style={{ fontSize: '0.88rem', color: '#cbd5e1', marginTop: '4px' }}>
+          <p style={{ fontSize: '0.88rem', color: '#D6CEC0', marginTop: '4px' }}>
             Official assessment dossier with pure JS printable PDF export and scoring bias audit.
           </p>
         </div>
@@ -102,8 +106,8 @@ export default function AuditReportView({ candidate }) {
             href={`/api/report/${candidate?.id || 'cand-001'}/vac-ai-ml/pdf`}
             target="_blank"
             rel="noreferrer"
-            className="btn btn-primary"
-            style={{ background: '#10b981', padding: '10px 20px', fontWeight: 700 }}
+            className="btn btn-forest"
+            style={{ padding: '11px 22px' }}
           >
             <Download size={16} /> Download Official PDF Dossier
           </a>
@@ -111,22 +115,22 @@ export default function AuditReportView({ candidate }) {
       </div>
 
       {/* Main Scorecard Overview */}
-      <div className="card" style={{ padding: '28px', marginBottom: '24px', border: '1.5px solid #bfdbfe' }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid #e2e8f0', paddingBottom: '18px', marginBottom: '20px' }}>
+      <div className="card" style={{ padding: '32px', marginBottom: '24px' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid var(--border)', paddingBottom: '20px', marginBottom: '22px' }}>
           <div>
-            <h3 style={{ fontSize: '1.3rem', fontWeight: 800, color: '#0f172a' }}>
+            <h3 style={{ fontFamily: 'var(--font-serif)', fontSize: '1.5rem', fontWeight: 600, color: '#111111', margin: 0 }}>
               Final Candidate Assessment Scorecard
             </h3>
-            <p style={{ fontSize: '0.84rem', color: '#64748b', marginTop: '2px' }}>
+            <p style={{ fontSize: '0.86rem', color: 'var(--text-muted)', marginTop: '4px' }}>
               Candidate: <strong>{candidate?.name || 'Candidate'}</strong> • Post: <strong>Technical Assessment</strong>
             </p>
           </div>
 
           <div style={{ textAlign: 'right' }}>
-            <span style={{ fontSize: '2.4rem', fontWeight: 800, color: '#008bdc' }}>
+            <span style={{ fontFamily: 'var(--font-serif)', fontSize: '2.8rem', fontWeight: 700, color: 'var(--forest-green)' }}>
               {finalScore}%
             </span>
-            <div style={{ fontSize: '0.78rem', color: '#10b981', fontWeight: 700 }}>
+            <div style={{ fontSize: '0.78rem', color: 'var(--forest-green)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.06em' }}>
               Strongly Recommended for Appointment
             </div>
           </div>

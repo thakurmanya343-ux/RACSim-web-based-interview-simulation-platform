@@ -105,28 +105,29 @@ export default function LiveCodingView() {
   };
 
   return (
-    <div style={{ maxWidth: '1100px', margin: '30px auto' }}>
+    <div style={{ maxWidth: '1100px', margin: '30px auto', padding: '0 20px' }}>
       {/* Top Banner */}
       <div
         style={{
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
-          background: 'linear-gradient(135deg, #1e293b 0%, #0f172a 100%)',
-          borderRadius: '16px',
-          padding: '20px 28px',
+          background: '#111111',
+          borderRadius: 'var(--radius-xl)',
+          padding: '24px 30px',
           color: '#ffffff',
-          marginBottom: '20px'
+          marginBottom: '20px',
+          boxShadow: 'var(--shadow-lg)'
         }}
       >
         <div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
-            <Code2 size={18} color="#38bdf8" />
-            <span style={{ fontSize: '0.78rem', color: '#94a3b8', fontWeight: 700, textTransform: 'uppercase' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px' }}>
+            <span className="pulse-dot-green" />
+            <span style={{ fontSize: '0.75rem', color: 'var(--forest-green-border)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.12em' }}>
               Selector Board Room Sandbox
             </span>
           </div>
-          <h2 style={{ fontSize: '1.45rem', fontWeight: 800, margin: 0 }}>
+          <h2 style={{ fontFamily: 'var(--font-serif)', fontSize: '1.75rem', fontWeight: 500, margin: 0 }}>
             Live Pair-Programming & Coding Assessment Sandbox
           </h2>
         </div>

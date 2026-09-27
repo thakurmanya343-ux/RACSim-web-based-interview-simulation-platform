@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Shield, Lock, Mail, ArrowRight, UserCheck, CheckCircle2 } from 'lucide-react';
+import { Shield, Lock, Mail, ArrowUpRight, UserCheck, ArrowLeft, Star } from 'lucide-react';
 
 export default function InterviewerLogin({ onLoginSuccess, onBackToHome }) {
   const [email, setEmail] = useState('dr.kapoor@selector-board.org');
@@ -24,82 +24,75 @@ export default function InterviewerLogin({ onLoginSuccess, onBackToHome }) {
   };
 
   return (
-    <div style={{ maxWidth: '480px', margin: '60px auto' }}>
-      <div className="card" style={{ border: '1.5px solid #bfdbfe', padding: '36px 32px' }}>
+    <div style={{ maxWidth: '520px', margin: '60px auto', padding: '0 20px' }}>
+      <div className="card" style={{ padding: '40px 36px', boxShadow: 'var(--shadow-lg)' }}>
         {/* Header Icon */}
-        <div style={{ textAlign: 'center', marginBottom: '24px' }}>
+        <div style={{ textAlign: 'center', marginBottom: '28px' }}>
           <div
             style={{
-              width: '64px',
-              height: '64px',
-              borderRadius: '16px',
-              background: 'linear-gradient(135deg, #008bdc 0%, #1e40af 100%)',
+              width: '56px',
+              height: '56px',
+              borderRadius: '50%',
+              background: '#111111',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
               margin: '0 auto 16px auto',
-              color: '#ffffff',
-              boxShadow: '0 8px 20px rgba(0, 139, 220, 0.25)'
+              color: '#FFFFFF'
             }}
           >
-            <Shield size={32} />
+            <Shield size={26} />
           </div>
-          <h2 style={{ fontSize: '1.6rem', fontWeight: 800, color: '#0f172a' }}>
-            Interviewer / Selector Login
+          <div style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', marginBottom: '8px' }}>
+            <span className="pulse-dot-green" />
+            <span style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--forest-green)', textTransform: 'uppercase', letterSpacing: '0.14em' }}>
+              Selector Portal
+            </span>
+          </div>
+          <h2 style={{ fontFamily: 'var(--font-serif)', fontSize: '2.1rem', fontWeight: 500, color: '#111111', lineHeight: 1.15 }}>
+            Board of Selectors
           </h2>
-          <p style={{ fontSize: '0.88rem', color: '#64748b', marginTop: '6px' }}>
-            Access applicant dossiers, review AI semantic match scores, and schedule candidate simulation interviews.
+          <p style={{ fontSize: '0.9rem', color: '#57534E', marginTop: '6px' }}>
+            Review candidate dossiers, evaluate speech responses, deliver live questions, and generate official audit PDFs.
           </p>
         </div>
 
         {/* Form */}
         <form onSubmit={handleSubmit}>
           <div style={{ marginBottom: '16px' }}>
-            <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: 700, color: '#475569', marginBottom: '6px' }}>
+            <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: 600, color: '#111111', marginBottom: '6px' }}>
               Selector Email
             </label>
             <div style={{ position: 'relative' }}>
-              <div style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)', color: '#94a3b8' }}>
+              <div style={{ position: 'absolute', left: '14px', top: '50%', transform: 'translateY(-50%)', color: '#78716C' }}>
                 <Mail size={16} />
               </div>
               <input
                 type="email"
+                className="form-input"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
-                style={{
-                  width: '100%',
-                  padding: '10px 12px 10px 38px',
-                  borderRadius: '8px',
-                  border: '1px solid #cbd5e1',
-                  outline: 'none',
-                  fontSize: '0.92rem'
-                }}
+                style={{ paddingLeft: '40px' }}
               />
             </div>
           </div>
 
-          <div style={{ marginBottom: '20px' }}>
-            <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: 700, color: '#475569', marginBottom: '6px' }}>
-              Password / Authorization Token
+          <div style={{ marginBottom: '22px' }}>
+            <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: 600, color: '#111111', marginBottom: '6px' }}>
+              Authorization Passcode
             </label>
             <div style={{ position: 'relative' }}>
-              <div style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)', color: '#94a3b8' }}>
+              <div style={{ position: 'absolute', left: '14px', top: '50%', transform: 'translateY(-50%)', color: '#78716C' }}>
                 <Lock size={16} />
               </div>
               <input
                 type="password"
+                className="form-input"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
-                style={{
-                  width: '100%',
-                  padding: '10px 12px 10px 38px',
-                  borderRadius: '8px',
-                  border: '1px solid #cbd5e1',
-                  outline: 'none',
-                  fontSize: '0.92rem'
-                }}
+                style={{ paddingLeft: '40px' }}
               />
             </div>
           </div>
@@ -107,46 +100,46 @@ export default function InterviewerLogin({ onLoginSuccess, onBackToHome }) {
           <button
             type="submit"
             className="btn btn-primary"
-            style={{ width: '100%', padding: '12px', fontSize: '1rem', marginBottom: '18px' }}
+            style={{ width: '100%', padding: '13px', fontSize: '0.96rem', marginBottom: '22px' }}
           >
-            Access Selector Dashboard <ArrowRight size={16} />
+            Access Selector Dashboard <ArrowUpRight size={16} />
           </button>
         </form>
 
         {/* Quick Demo Login Option */}
-        <div style={{ borderTop: '1px dashed #cbd5e1', paddingTop: '18px', textAlign: 'center' }}>
-          <div style={{ fontSize: '0.8rem', fontWeight: 700, color: '#64748b', marginBottom: '10px', textTransform: 'uppercase' }}>
-            Instant Demo Access
+        <div style={{ borderTop: '1px solid var(--border)', paddingTop: '20px', textAlign: 'center' }}>
+          <div style={{ fontSize: '0.74rem', fontWeight: 700, color: 'var(--text-muted)', marginBottom: '12px', textTransform: 'uppercase', letterSpacing: '0.1em' }}>
+            Instant Evaluation Credentials
           </div>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
             <button
               type="button"
               className="btn btn-secondary btn-sm"
               onClick={() => handleQuickLogin('Dr. Vivek Kapoor', 'dr.kapoor@tsec.edu', 'Chief Selector - AI & Algorithms')}
-              style={{ justifyContent: 'flex-start', padding: '8px 14px' }}
+              style={{ justifyContent: 'flex-start', padding: '10px 16px', borderRadius: 'var(--radius-md)' }}
             >
-              <UserCheck size={16} color="#008bdc" />
+              <UserCheck size={16} color="var(--forest-green)" />
               <span>Login as <strong>Dr. Vivek Kapoor</strong> (Chief Selector)</span>
             </button>
             <button
               type="button"
               className="btn btn-secondary btn-sm"
               onClick={() => handleQuickLogin('Prof. Ananya Sen', 'prof.sen@tsec.edu', 'Panel Member - Web Systems')}
-              style={{ justifyContent: 'flex-start', padding: '8px 14px' }}
+              style={{ justifyContent: 'flex-start', padding: '10px 16px', borderRadius: 'var(--radius-md)' }}
             >
-              <UserCheck size={16} color="#008bdc" />
+              <UserCheck size={16} color="var(--forest-green)" />
               <span>Login as <strong>Prof. Ananya Sen</strong> (Web Systems Expert)</span>
             </button>
           </div>
         </div>
 
-        <div style={{ marginTop: '20px', textAlign: 'center' }}>
+        <div style={{ marginTop: '24px', textAlign: 'center' }}>
           <button
             type="button"
             onClick={onBackToHome}
-            style={{ fontSize: '0.85rem', color: '#64748b', cursor: 'pointer', background: 'none', border: 'none' }}
+            style={{ fontSize: '0.86rem', color: '#57534E', cursor: 'pointer', background: 'none', border: 'none', display: 'inline-flex', alignItems: 'center', gap: '6px' }}
           >
-            ← Back to Candidate Landing Page
+            <ArrowLeft size={14} /> Back to Candidate Landing Page
           </button>
         </div>
       </div>

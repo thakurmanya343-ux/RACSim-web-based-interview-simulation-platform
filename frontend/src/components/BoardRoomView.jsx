@@ -397,12 +397,12 @@ export default function BoardRoomView({
       {/* Top Header Card with Role Switcher */}
       <div
         style={{
-          background: 'linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%)',
-          borderRadius: '16px',
-          padding: '24px 30px',
+          background: '#111111',
+          borderRadius: 'var(--radius-xl)',
+          padding: '28px 32px',
           color: '#ffffff',
           marginBottom: '24px',
-          boxShadow: '0 10px 25px rgba(15, 23, 42, 0.2)',
+          boxShadow: 'var(--shadow-lg)',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
@@ -412,15 +412,15 @@ export default function BoardRoomView({
       >
         <div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px' }}>
-            <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#10b981', display: 'inline-block' }} />
-            <span style={{ fontSize: '0.8rem', fontWeight: 700, color: '#38bdf8', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+            <span className="pulse-dot-green" />
+            <span style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--forest-green-border)', textTransform: 'uppercase', letterSpacing: '0.14em' }}>
               Live Selection Board Room Simulation
             </span>
           </div>
-          <h2 style={{ fontSize: '1.65rem', fontWeight: 800, color: '#ffffff', margin: 0 }}>
+          <h2 style={{ fontFamily: 'var(--font-serif)', fontSize: '1.9rem', fontWeight: 500, color: '#ffffff', margin: 0 }}>
             Board Room Session #{sessionId ? sessionId.slice(-4).toUpperCase() : '01'}
           </h2>
-          <p style={{ fontSize: '0.86rem', color: '#94a3b8', marginTop: '4px' }}>
+          <p style={{ fontSize: '0.86rem', color: '#D6CEC0', marginTop: '4px' }}>
             Candidate: <strong>{candidate?.name || 'Candidate'}</strong> ({candidate?.email || 'Registered'})
           </p>
         </div>
@@ -429,23 +429,23 @@ export default function BoardRoomView({
           {/* Active Perspective Toggle */}
           <div
             style={{
-              background: 'rgba(255, 255, 255, 0.1)',
+              background: 'rgba(255, 255, 255, 0.08)',
               padding: '4px',
-              borderRadius: '10px',
+              borderRadius: 'var(--radius-full)',
               display: 'flex',
               gap: '4px',
-              border: '1px solid rgba(255, 255, 255, 0.2)'
+              border: '1px solid rgba(255, 255, 255, 0.15)'
             }}
           >
             <button
               type="button"
               onClick={() => setActiveRole('candidate')}
               style={{
-                background: activeRole === 'candidate' ? '#008bdc' : 'transparent',
-                color: '#ffffff',
+                background: activeRole === 'candidate' ? '#FFFFFF' : 'transparent',
+                color: activeRole === 'candidate' ? '#111111' : '#FFFFFF',
                 border: 'none',
                 padding: '6px 14px',
-                borderRadius: '8px',
+                borderRadius: 'var(--radius-full)',
                 fontSize: '0.82rem',
                 fontWeight: 700,
                 display: 'flex',
@@ -454,17 +454,17 @@ export default function BoardRoomView({
                 cursor: 'pointer'
               }}
             >
-              <User size={14} /> Candidate View
+              <User size={13} /> Candidate View
             </button>
             <button
               type="button"
               onClick={() => setActiveRole('interviewer')}
               style={{
-                background: activeRole === 'interviewer' ? '#008bdc' : 'transparent',
-                color: '#ffffff',
+                background: activeRole === 'interviewer' ? '#FFFFFF' : 'transparent',
+                color: activeRole === 'interviewer' ? '#111111' : '#FFFFFF',
                 border: 'none',
                 padding: '6px 14px',
-                borderRadius: '8px',
+                borderRadius: 'var(--radius-full)',
                 fontSize: '0.82rem',
                 fontWeight: 700,
                 display: 'flex',
@@ -473,7 +473,7 @@ export default function BoardRoomView({
                 cursor: 'pointer'
               }}
             >
-              <Shield size={14} /> Interviewer Console
+              <Shield size={13} /> Interviewer Console
             </button>
           </div>
 
@@ -482,7 +482,7 @@ export default function BoardRoomView({
               className="btn btn-primary"
               onClick={startNewSession}
               disabled={isLoading}
-              style={{ background: '#008bdc', padding: '10px 20px', fontSize: '0.92rem' }}
+              style={{ padding: '10px 22px', fontSize: '0.92rem' }}
             >
               <Sparkles size={16} /> {isLoading ? 'Initializing...' : 'Launch Board Room'}
             </button>
@@ -491,17 +491,16 @@ export default function BoardRoomView({
               <button
                 className="btn btn-secondary btn-sm"
                 onClick={startNewSession}
-                style={{ background: 'rgba(255,255,255,0.15)', color: '#fff', border: '1px solid rgba(255,255,255,0.3)' }}
+                style={{ background: 'rgba(255,255,255,0.12)', color: '#fff', border: '1px solid rgba(255,255,255,0.2)' }}
               >
                 <RotateCcw size={14} /> Restart
               </button>
               {!isFinished && (
                 <button
-                  className="btn btn-sm"
+                  className="btn btn-forest btn-sm"
                   onClick={handleFinishSession}
-                  style={{ background: '#10b981', color: '#fff', fontWeight: 700 }}
                 >
-                  <FileCheck size={14} /> Finish & Audit
+                  <FileCheck size={14} /> Conclude & Audit
                 </button>
               )}
             </div>
@@ -510,7 +509,7 @@ export default function BoardRoomView({
       </div>
 
       {/* Stage Progression Bar */}
-      <div className="card" style={{ padding: '16px 24px', marginBottom: '24px' }}>
+      <div className="card" style={{ padding: '14px 24px', marginBottom: '24px' }}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '8px', overflowX: 'auto' }}>
           {STAGES.map((s, idx) => {
             const isCurrent = currentQuestion?.stage?.toLowerCase() === s.key.toLowerCase();
@@ -521,27 +520,27 @@ export default function BoardRoomView({
                   display: 'flex',
                   alignItems: 'center',
                   gap: '8px',
-                  padding: '8px 14px',
-                  borderRadius: '8px',
-                  backgroundColor: isCurrent ? '#e0f2fe' : '#f8fafc',
-                  border: isCurrent ? '1.5px solid #008bdc' : '1px solid #e2e8f0',
-                  color: isCurrent ? '#008bdc' : '#64748b',
+                  padding: '7px 14px',
+                  borderRadius: 'var(--radius-full)',
+                  backgroundColor: isCurrent ? 'var(--forest-green-bg)' : 'var(--bg-subtle)',
+                  border: isCurrent ? '1.5px solid var(--forest-green-border)' : '1px solid var(--border)',
+                  color: isCurrent ? 'var(--forest-green)' : 'var(--text-muted)',
                   fontWeight: isCurrent ? 700 : 500,
-                  fontSize: '0.84rem',
+                  fontSize: '0.82rem',
                   whiteSpace: 'nowrap'
                 }}
               >
                 <span
                   style={{
-                    width: '20px',
-                    height: '20px',
+                    width: '18px',
+                    height: '18px',
                     borderRadius: '50%',
-                    background: isCurrent ? '#008bdc' : '#cbd5e1',
+                    background: isCurrent ? 'var(--forest-green)' : '#A8A29E',
                     color: '#fff',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    fontSize: '0.72rem',
+                    fontSize: '0.7rem',
                     fontWeight: 700
                   }}
                 >
@@ -630,14 +629,14 @@ export default function BoardRoomView({
               </span>
             </div>
 
-            <h3 style={{ fontSize: '1.3rem', fontWeight: 800, color: '#0f172a', lineHeight: 1.4, marginBottom: '14px' }}>
+            <h3 style={{ fontFamily: 'var(--font-serif)', fontSize: '1.45rem', fontWeight: 600, color: '#111111', lineHeight: 1.35, marginBottom: '16px' }}>
               "{currentQuestion?.text || 'Loading active Board Room question...'}"
             </h3>
 
             {/* Expected Rubric Concepts */}
             <div style={{ marginBottom: '18px' }}>
-              <span style={{ fontSize: '0.78rem', fontWeight: 700, color: '#64748b', textTransform: 'uppercase', display: 'block', marginBottom: '6px' }}>
-                Expected Rubric Competencies:
+              <span style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.08em', display: 'block', marginBottom: '8px' }}>
+                Evaluated Rubric Competencies:
               </span>
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
                 {(currentQuestion?.expectedConcepts && currentQuestion.expectedConcepts.length > 0
@@ -647,12 +646,12 @@ export default function BoardRoomView({
                   <span
                     key={concept}
                     style={{
-                      fontSize: '0.75rem',
-                      background: '#f1f5f9',
-                      color: '#334155',
-                      padding: '3px 8px',
-                      borderRadius: '6px',
-                      border: '1px solid #cbd5e1',
+                      fontSize: '0.78rem',
+                      background: 'var(--bg-subtle)',
+                      color: '#111111',
+                      padding: '4px 10px',
+                      borderRadius: 'var(--radius-full)',
+                      border: '1px solid var(--border)',
                       fontWeight: 600
                     }}
                   >
@@ -663,22 +662,22 @@ export default function BoardRoomView({
             </div>
 
             {/* Answer Input Section */}
-            <div style={{ borderTop: '1px solid #f1f5f9', paddingTop: '16px', marginTop: '14px' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
-                <label style={{ fontSize: '0.85rem', fontWeight: 700, color: '#1e293b' }}>
+            <div style={{ borderTop: '1px solid var(--border-subtle)', paddingTop: '16px', marginTop: '16px' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
+                <label style={{ fontSize: '0.85rem', fontWeight: 700, color: '#111111' }}>
                   Candidate Response {activeRole === 'interviewer' ? '(Live Candidate Feed)' : ''}:
                 </label>
-                <div style={{ display: 'flex', gap: '8px' }}>
+                <div style={{ display: 'flex', gap: '6px' }}>
                   <button
                     type="button"
                     onClick={() => setInputMode('text')}
                     style={{
-                      fontSize: '0.76rem',
-                      padding: '4px 10px',
-                      borderRadius: '6px',
-                      border: inputMode === 'text' ? '1.5px solid #008bdc' : '1px solid #cbd5e1',
-                      background: inputMode === 'text' ? '#e0f2fe' : '#fff',
-                      color: inputMode === 'text' ? '#008bdc' : '#64748b',
+                      fontSize: '0.78rem',
+                      padding: '5px 12px',
+                      borderRadius: 'var(--radius-full)',
+                      border: inputMode === 'text' ? '1.5px solid #111111' : '1px solid var(--border)',
+                      background: inputMode === 'text' ? '#111111' : '#FFFFFF',
+                      color: inputMode === 'text' ? '#FFFFFF' : '#57534E',
                       fontWeight: 600,
                       cursor: 'pointer'
                     }}
@@ -689,12 +688,12 @@ export default function BoardRoomView({
                     type="button"
                     onClick={() => setInputMode('voice')}
                     style={{
-                      fontSize: '0.76rem',
-                      padding: '4px 10px',
-                      borderRadius: '6px',
-                      border: inputMode === 'voice' ? '1.5px solid #008bdc' : '1px solid #cbd5e1',
-                      background: inputMode === 'voice' ? '#e0f2fe' : '#fff',
-                      color: inputMode === 'voice' ? '#008bdc' : '#64748b',
+                      fontSize: '0.78rem',
+                      padding: '5px 12px',
+                      borderRadius: 'var(--radius-full)',
+                      border: inputMode === 'voice' ? '1.5px solid #111111' : '1px solid var(--border)',
+                      background: inputMode === 'voice' ? '#111111' : '#FFFFFF',
+                      color: inputMode === 'voice' ? '#FFFFFF' : '#57534E',
                       fontWeight: 600,
                       cursor: 'pointer'
                     }}

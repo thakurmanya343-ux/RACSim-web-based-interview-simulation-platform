@@ -405,57 +405,60 @@ export default function App() {
             />
             <StatsBar />
 
-            {/* Platform Overview Cards */}
-            <section style={{ padding: '60px 0', background: '#f8fafc' }}>
+            {/* Platform Overview Cards (Process & About Section) */}
+            <section id="process-section" style={{ padding: '72px 0', background: 'var(--bg-page)', borderTop: '1px solid var(--border)' }}>
               <div className="container">
-                <div style={{ textAlign: 'center', maxWidth: '640px', margin: '0 auto 48px auto' }}>
-                  <span className="badge badge-blue" style={{ marginBottom: '10px' }}>
-                    Standardized Selection Architecture
-                  </span>
-                  <h2 style={{ fontSize: '2rem', fontWeight: 800, color: '#0f172a' }}>
-                    Integrated Selector Simulation Platform
+                <div style={{ textAlign: 'center', maxWidth: '680px', margin: '0 auto 52px auto' }} id="about-section">
+                  <div style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', marginBottom: '12px' }}>
+                    <span className="pulse-dot-green" />
+                    <span style={{ fontSize: '0.76rem', fontWeight: 700, color: 'var(--forest-green)', textTransform: 'uppercase', letterSpacing: '0.14em' }}>
+                      Standardized Selection Architecture
+                    </span>
+                  </div>
+                  <h2 style={{ fontFamily: 'var(--font-serif)', fontSize: '2.8rem', fontWeight: 500, color: '#111111', lineHeight: 1.12 }}>
+                    A rigorous standard for <em>objective evaluation</em>.
                   </h2>
-                  <p style={{ fontSize: '0.95rem', color: '#64748b', marginTop: '8px' }}>
+                  <p style={{ fontSize: '1.02rem', color: '#57534E', marginTop: '12px', lineHeight: 1.6 }}>
                     Experience the complete pipeline: dynamic CV parsing, cosine vacancy matching, live selector board room simulation, and printable audit dossiers.
                   </p>
                 </div>
 
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '20px' }}>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '22px' }}>
                   <div
                     className="card"
-                    style={{ padding: '24px', cursor: 'pointer' }}
+                    style={{ padding: '28px 24px', cursor: 'pointer' }}
                     onClick={() => setCurrentView('candidate')}
                   >
-                    <div style={{ width: '44px', height: '44px', borderRadius: '10px', background: '#e0f2fe', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#008bdc', marginBottom: '14px' }}>
-                      <UploadCloud size={22} />
+                    <div style={{ fontFamily: 'var(--font-serif)', fontSize: '1.4rem', fontWeight: 600, color: 'var(--forest-green)', marginBottom: '14px' }}>
+                      01
                     </div>
-                    <h3 style={{ fontSize: '1.1rem', fontWeight: 700, color: '#0f172a', marginBottom: '6px' }}>
-                      1. Dynamic CV Parser
+                    <h3 style={{ fontFamily: 'var(--font-serif)', fontSize: '1.25rem', fontWeight: 600, color: '#111111', marginBottom: '8px' }}>
+                      Dynamic CV Parser
                     </h3>
-                    <p style={{ fontSize: '0.84rem', color: '#64748b', lineHeight: 1.5 }}>
+                    <p style={{ fontSize: '0.86rem', color: '#57534E', lineHeight: 1.55 }}>
                       Parses uploaded PDF/DOCX resumes, maps skills to a 55+ taxonomy, and calculates real cosine match scores.
                     </p>
                   </div>
 
                   <div
                     className="card"
-                    style={{ padding: '24px', cursor: 'pointer' }}
+                    style={{ padding: '28px 24px', cursor: 'pointer' }}
                     onClick={() => setCurrentView('candidate')}
                   >
-                    <div style={{ width: '44px', height: '44px', borderRadius: '10px', background: '#fef3c7', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#d97706', marginBottom: '14px' }}>
-                      <Calendar size={22} />
+                    <div style={{ fontFamily: 'var(--font-serif)', fontSize: '1.4rem', fontWeight: 600, color: 'var(--forest-green)', marginBottom: '14px' }}>
+                      02
                     </div>
-                    <h3 style={{ fontSize: '1.1rem', fontWeight: 700, color: '#0f172a', marginBottom: '6px' }}>
-                      2. Scheduled Meeting Flow
+                    <h3 style={{ fontFamily: 'var(--font-serif)', fontSize: '1.25rem', fontWeight: 600, color: '#111111', marginBottom: '8px' }}>
+                      Scheduled Meeting Flow
                     </h3>
-                    <p style={{ fontSize: '0.84rem', color: '#64748b', lineHeight: 1.5 }}>
+                    <p style={{ fontSize: '0.86rem', color: '#57534E', lineHeight: 1.55 }}>
                       Interviewer schedules slot, candidate receives instant invitation, and accepts to unlock the Board Room.
                     </p>
                   </div>
 
                   <div
                     className="card"
-                    style={{ padding: '24px', cursor: 'pointer' }}
+                    style={{ padding: '28px 24px', cursor: 'pointer' }}
                     onClick={() => {
                       if (scheduledApp || interviewerSession) {
                         setCurrentView('boardroom');
@@ -464,29 +467,29 @@ export default function App() {
                       }
                     }}
                   >
-                    <div style={{ width: '44px', height: '44px', borderRadius: '10px', background: '#ecfdf5', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#059669', marginBottom: '14px' }}>
-                      <Mic size={22} />
+                    <div style={{ fontFamily: 'var(--font-serif)', fontSize: '1.4rem', fontWeight: 600, color: 'var(--forest-green)', marginBottom: '14px' }}>
+                      03
                     </div>
-                    <h3 style={{ fontSize: '1.1rem', fontWeight: 700, color: '#0f172a', marginBottom: '6px' }}>
-                      3. Live Board Room
+                    <h3 style={{ fontFamily: 'var(--font-serif)', fontSize: '1.25rem', fontWeight: 600, color: '#111111', marginBottom: '8px' }}>
+                      Live Board Room
                     </h3>
-                    <p style={{ fontSize: '0.84rem', color: '#64748b', lineHeight: 1.5 }}>
+                    <p style={{ fontSize: '0.86rem', color: '#57534E', lineHeight: 1.55 }}>
                       Real Web Speech API dictation, AI question delivery, interviewer custom questions, and live AI concept scoring.
                     </p>
                   </div>
 
                   <div
                     className="card"
-                    style={{ padding: '24px', cursor: 'pointer' }}
+                    style={{ padding: '28px 24px', cursor: 'pointer' }}
                     onClick={() => setCurrentView('interviewer')}
                   >
-                    <div style={{ width: '44px', height: '44px', borderRadius: '10px', background: '#fdf4ff', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#a21caf', marginBottom: '14px' }}>
-                      <BarChart3 size={22} />
+                    <div style={{ fontFamily: 'var(--font-serif)', fontSize: '1.4rem', fontWeight: 600, color: 'var(--forest-green)', marginBottom: '14px' }}>
+                      04
                     </div>
-                    <h3 style={{ fontSize: '1.1rem', fontWeight: 700, color: '#0f172a', marginBottom: '6px' }}>
-                      4. Selector Evaluation
+                    <h3 style={{ fontFamily: 'var(--font-serif)', fontSize: '1.25rem', fontWeight: 600, color: '#111111', marginBottom: '8px' }}>
+                      Selector Evaluation
                     </h3>
-                    <p style={{ fontSize: '0.84rem', color: '#64748b', lineHeight: 1.5 }}>
+                    <p style={{ fontSize: '0.86rem', color: '#57534E', lineHeight: 1.55 }}>
                       Dynamic 6-dimension evaluation scorecards, bias correlation audit, and printable official PDF download.
                     </p>
                   </div>
@@ -498,17 +501,23 @@ export default function App() {
 
         {/* VIEW 2: CANDIDATE FLOW */}
         {currentView === 'candidate' && (
-          <div className="container" style={{ padding: '20px' }}>
+          <div className="container" style={{ padding: '30px 20px' }}>
             {candidateState === 'upload' && (
-              <div style={{ maxWidth: '600px', margin: '40px auto' }}>
-                <div className="card" style={{ border: '1.5px solid #bfdbfe', padding: '36px', textAlign: 'center' }}>
-                  <div className="upload-icon-circle">
-                    <UploadCloud size={30} />
+              <div style={{ maxWidth: '640px', margin: '40px auto' }}>
+                <div className="card" style={{ padding: '44px 36px', textAlign: 'center', boxShadow: 'var(--shadow-lg)' }}>
+                  <div className="upload-tray-circle">
+                    <UploadCloud size={28} />
                   </div>
-                  <h2 style={{ fontSize: '1.5rem', fontWeight: 800, color: '#0f172a', marginBottom: '6px' }}>
+                  <div style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', marginBottom: '8px' }}>
+                    <span className="pulse-dot-green" />
+                    <span style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--forest-green)', textTransform: 'uppercase', letterSpacing: '0.14em' }}>
+                      Candidate Dossier
+                    </span>
+                  </div>
+                  <h2 style={{ fontFamily: 'var(--font-serif)', fontSize: '2.2rem', fontWeight: 500, color: '#111111', marginBottom: '8px' }}>
                     Upload Candidate CV
                   </h2>
-                  <p style={{ fontSize: '0.88rem', color: '#64748b', marginBottom: '24px' }}>
+                  <p style={{ fontSize: '0.92rem', color: '#57534E', marginBottom: '28px' }}>
                     Upload your PDF or DOCX resume. The platform will dynamically extract technical skills and compute matching vacancies.
                   </p>
 
@@ -526,10 +535,10 @@ export default function App() {
 
                   <button
                     className="btn btn-primary"
-                    style={{ padding: '12px 28px', fontSize: '1rem' }}
+                    style={{ padding: '13px 32px', fontSize: '0.98rem' }}
                     onClick={() => document.getElementById('candidate-file-input')?.click()}
                   >
-                    <UploadCloud size={18} /> Select CV File
+                    <UploadCloud size={18} /> Select CV Document ↗
                   </button>
                 </div>
               </div>

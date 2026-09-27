@@ -18,28 +18,28 @@ export default function CvAnalyzingState({ fileName }) {
       style={{
         maxWidth: '560px',
         margin: '60px auto',
-        background: '#ffffff',
-        borderRadius: '20px',
-        border: '1.5px solid #bfdbfe',
-        boxShadow: '0 20px 45px rgba(0, 139, 220, 0.12)',
-        padding: '40px 32px',
+        background: '#FFFFFF',
+        borderRadius: 'var(--radius-xl)',
+        border: '1.5px solid var(--border)',
+        boxShadow: 'var(--shadow-lg)',
+        padding: '44px 36px',
         textAlign: 'center'
       }}
     >
       <div
         style={{
-          width: '72px',
-          height: '72px',
+          width: '64px',
+          height: '64px',
           borderRadius: '50%',
-          background: 'linear-gradient(135deg, #e0f2fe 0%, #bfdbfe 100%)',
+          background: 'var(--bg-subtle)',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
           margin: '0 auto 20px auto',
-          color: '#008bdc'
+          color: 'var(--forest-green)'
         }}
       >
-        <Loader2 size={36} className="spin-animation" style={{ animation: 'spin 1.2s linear infinite' }} />
+        <Loader2 size={32} style={{ animation: 'spin 1.2s linear infinite' }} />
       </div>
 
       <style>{`
@@ -49,45 +49,52 @@ export default function CvAnalyzingState({ fileName }) {
         }
       `}</style>
 
-      <h2 style={{ fontSize: '1.5rem', fontWeight: 800, color: '#0f172a', marginBottom: '8px' }}>
-        Analyzing your CV...
+      <div style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', marginBottom: '8px' }}>
+        <span className="pulse-dot-green" />
+        <span style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--forest-green)', textTransform: 'uppercase', letterSpacing: '0.14em' }}>
+          Semantic Extraction
+        </span>
+      </div>
+
+      <h2 style={{ fontFamily: 'var(--font-serif)', fontSize: '2.1rem', fontWeight: 500, color: '#111111', lineHeight: 1.15, marginBottom: '8px' }}>
+        Analyzing your dossier...
       </h2>
-      <p style={{ fontSize: '0.9rem', color: '#64748b', marginBottom: '28px' }}>
-        File: <strong style={{ color: '#008bdc' }}>{fileName || 'Resume Document'}</strong>
+      <p style={{ fontSize: '0.9rem', color: '#57534E', marginBottom: '32px' }}>
+        Document: <strong style={{ color: '#111111' }}>{fileName || 'Resume Document'}</strong>
       </p>
 
       {/* Progress steps */}
       <div style={{ display: 'flex', flexDirection: 'column', gap: '14px', textAlign: 'left', maxWidth: '420px', margin: '0 auto' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
           {step >= 1 ? (
-            <CheckCircle size={18} color="#10b981" />
+            <CheckCircle size={18} color="var(--forest-green)" />
           ) : (
-            <FileText size={18} color="#94a3b8" />
+            <FileText size={18} color="#A8A29E" />
           )}
-          <span style={{ fontSize: '0.88rem', color: step >= 1 ? '#0f172a' : '#94a3b8', fontWeight: 500 }}>
-            Extracting text via pdfplumber / python-docx
+          <span style={{ fontSize: '0.88rem', color: step >= 1 ? '#111111' : '#A8A29E', fontWeight: 500 }}>
+            Extracting text entities via structural parser
           </span>
         </div>
 
         <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
           {step >= 2 ? (
-            <CheckCircle size={18} color="#10b981" />
+            <CheckCircle size={18} color="var(--forest-green)" />
           ) : (
-            <Cpu size={18} color="#94a3b8" />
+            <Cpu size={18} color="#A8A29E" />
           )}
-          <span style={{ fontSize: '0.88rem', color: step >= 2 ? '#0f172a' : '#94a3b8', fontWeight: 500 }}>
-            Cross-referencing with 50+ domain skills taxonomy
+          <span style={{ fontSize: '0.88rem', color: step >= 2 ? '#111111' : '#A8A29E', fontWeight: 500 }}>
+            Cross-referencing with 55+ technical competencies taxonomy
           </span>
         </div>
 
         <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
           {step >= 3 ? (
-            <CheckCircle size={18} color="#10b981" />
+            <CheckCircle size={18} color="var(--forest-green)" />
           ) : (
-            <Sparkles size={18} color="#94a3b8" />
+            <Sparkles size={18} color="#A8A29E" />
           )}
-          <span style={{ fontSize: '0.88rem', color: step >= 3 ? '#0f172a' : '#94a3b8', fontWeight: 500 }}>
-            Synthesizing candidate profile & match vectors
+          <span style={{ fontSize: '0.88rem', color: step >= 3 ? '#111111' : '#A8A29E', fontWeight: 500 }}>
+            Synthesizing candidate profile & cosine match vectors
           </span>
         </div>
       </div>

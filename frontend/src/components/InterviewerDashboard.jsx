@@ -80,27 +80,28 @@ export default function InterviewerDashboard({
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
-          background: 'linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%)',
+          background: '#111111',
           color: '#ffffff',
-          borderRadius: '16px',
-          padding: '24px 30px',
+          borderRadius: 'var(--radius-xl)',
+          padding: '28px 32px',
           marginBottom: '28px',
-          boxShadow: '0 8px 24px rgba(15, 23, 42, 0.15)'
+          boxShadow: 'var(--shadow-lg)'
         }}
       >
         <div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px' }}>
-            <span className="badge badge-blue" style={{ background: '#1e40af', color: '#93c5fd' }}>
+            <span className="pulse-dot-green" />
+            <span style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--forest-green-border)', textTransform: 'uppercase', letterSpacing: '0.12em' }}>
               Selector Board Session
             </span>
-            <span style={{ fontSize: '0.82rem', color: '#94a3b8' }}>
-              {interviewerSession?.role || 'Panel Expert'}
+            <span style={{ fontSize: '0.82rem', color: '#A8A29E' }}>
+              • {interviewerSession?.role || 'Panel Expert'}
             </span>
           </div>
-          <h2 style={{ fontSize: '1.65rem', fontWeight: 800, color: '#ffffff', margin: 0 }}>
+          <h2 style={{ fontFamily: 'var(--font-serif)', fontSize: '1.9rem', fontWeight: 500, color: '#ffffff', margin: 0 }}>
             Welcome, {interviewerSession?.name || 'Chief Selector'}
           </h2>
-          <p style={{ fontSize: '0.88rem', color: '#cbd5e1', marginTop: '4px' }}>
+          <p style={{ fontSize: '0.88rem', color: '#D6CEC0', marginTop: '4px' }}>
             Simulate recruitment evaluations, inspect candidate CVs, and schedule interview sessions.
           </p>
         </div>
@@ -108,7 +109,7 @@ export default function InterviewerDashboard({
         <button
           className="btn btn-outline btn-sm"
           onClick={onRefresh}
-          style={{ background: 'rgba(255,255,255,0.1)', color: '#fff', borderColor: 'rgba(255,255,255,0.3)' }}
+          style={{ background: 'rgba(255,255,255,0.1)', color: '#fff', borderColor: 'rgba(255,255,255,0.2)' }}
         >
           <RefreshCw size={14} /> Refresh Data
         </button>
@@ -116,17 +117,17 @@ export default function InterviewerDashboard({
 
       {/* KPI Stats Cards */}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '16px', marginBottom: '28px' }}>
-        <div className="card" style={{ padding: '20px' }}>
+        <div className="card" style={{ padding: '22px' }}>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-            <span style={{ fontSize: '0.82rem', fontWeight: 700, color: '#64748b' }}>
+            <span style={{ fontSize: '0.78rem', fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
               Total Applicants
             </span>
-            <Users size={18} color="#008bdc" />
+            <Users size={17} color="var(--forest-green)" />
           </div>
-          <div style={{ fontSize: '2rem', fontWeight: 800, color: '#0f172a', marginTop: '8px' }}>
+          <div style={{ fontFamily: 'var(--font-serif)', fontSize: '2.4rem', fontWeight: 700, color: '#111111', marginTop: '6px' }}>
             {totalApps}
           </div>
-          <div style={{ fontSize: '0.74rem', color: '#64748b', marginTop: '2px' }}>
+          <div style={{ fontSize: '0.76rem', color: 'var(--text-muted)', marginTop: '2px' }}>
             Across all 5 domain tracks
           </div>
         </div>
