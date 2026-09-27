@@ -1,0 +1,162 @@
+[
+  {
+    "id": "q-01",
+    "text": "Tell us about yourself and your technical background.",
+    "domain": "Artificial Intelligence",
+    "stage": "IceBreaking",
+    "difficulty": 1,
+    "expectedConcepts": ["education", "background", "motivation", "experience", "technical skills"]
+  },
+  {
+    "id": "q-02",
+    "text": "What inspired you to specialize in machine learning and computer vision, and what recent AI paper caught your attention?",
+    "domain": "Artificial Intelligence",
+    "stage": "IceBreaking",
+    "difficulty": 1,
+    "expectedConcepts": ["machine learning", "computer vision", "research paper", "innovation", "architecture"]
+  },
+  {
+    "id": "q-03",
+    "text": "How do you keep yourself updated with the fast-moving deep learning research and open-source tooling?",
+    "domain": "Artificial Intelligence",
+    "stage": "IceBreaking",
+    "difficulty": 1,
+    "expectedConcepts": ["continuous learning", "research papers", "GitHub", "ArXiv", "community"]
+  },
+  {
+    "id": "q-04",
+    "text": "Explain your computer-vision project and the problem it solves.",
+    "domain": "Artificial Intelligence",
+    "stage": "ProjectDiscussion",
+    "difficulty": 2,
+    "expectedConcepts": ["computer vision", "problem formulation", "dataset", "evaluation metrics", "pipeline"]
+  },
+  {
+    "id": "q-05",
+    "text": "Walk us through the data pipeline and image preprocessing techniques you implemented for your computer vision model.",
+    "domain": "Artificial Intelligence",
+    "stage": "ProjectDiscussion",
+    "difficulty": 2,
+    "expectedConcepts": ["data augmentation", "normalization", "resizing", "data cleaning", "noise reduction"]
+  },
+  {
+    "id": "q-06",
+    "text": "What was the biggest technical bottleneck or latency constraint you encountered when evaluating your deep learning model, and how did you overcome it?",
+    "domain": "Artificial Intelligence",
+    "stage": "ProjectDiscussion",
+    "difficulty": 3,
+    "expectedConcepts": ["inference latency", "quantization", "batch size", "GPU acceleration", "profiling"]
+  },
+  {
+    "id": "q-07",
+    "text": "How did you validate your model to prevent data leakage and ensure reliable generalization on out-of-distribution real-world samples?",
+    "domain": "Artificial Intelligence",
+    "stage": "ProjectDiscussion",
+    "difficulty": 3,
+    "expectedConcepts": ["cross-validation", "data leakage", "out-of-distribution", "stratification", "test set integrity"]
+  },
+  {
+    "id": "q-08",
+    "text": "Why did you choose a convolutional neural network for this problem?",
+    "domain": "Artificial Intelligence",
+    "stage": "BasicTechnical",
+    "difficulty": 2,
+    "expectedConcepts": ["CNN", "feature extraction", "spatial hierarchy", "parameter sharing", "receptive field"]
+  },
+  {
+    "id": "q-09",
+    "text": "Explain the difference between L1 and L2 regularization and how each influences model weights during training.",
+    "domain": "Artificial Intelligence",
+    "stage": "BasicTechnical",
+    "difficulty": 2,
+    "expectedConcepts": ["L1 regularization", "L2 weight decay", "sparsity", "overfitting", "penalty term"]
+  },
+  {
+    "id": "q-10",
+    "text": "How does backpropagation compute gradients through hidden layers, and why does the vanishing gradient problem occur in deep networks?",
+    "domain": "Artificial Intelligence",
+    "stage": "BasicTechnical",
+    "difficulty": 2,
+    "expectedConcepts": ["chain rule", "gradient descent", "vanishing gradients", "activation functions", "derivative"]
+  },
+  {
+    "id": "q-11",
+    "text": "What is the difference between precision and recall, and in what computer vision applications would you prioritize recall over precision?",
+    "domain": "Artificial Intelligence",
+    "stage": "BasicTechnical",
+    "difficulty": 2,
+    "expectedConcepts": ["precision", "recall", "false negatives", "false positives", "safety-critical"]
+  },
+  {
+    "id": "q-12",
+    "text": "Describe the function of batch normalization and how it stabilizes deep neural network optimization.",
+    "domain": "Artificial Intelligence",
+    "stage": "BasicTechnical",
+    "difficulty": 2,
+    "expectedConcepts": ["batch normalization", "internal covariate shift", "mean and variance", "learning rate", "stabilization"]
+  },
+  {
+    "id": "q-13",
+    "text": "What would happen to your model if the training data were highly imbalanced?",
+    "domain": "Artificial Intelligence",
+    "stage": "AdvancedTechnical",
+    "difficulty": 3,
+    "expectedConcepts": ["class imbalance", "oversampling", "precision-recall tradeoff", "weighted loss", "Focal Loss"]
+  },
+  {
+    "id": "q-14",
+    "text": "Compare Vision Transformers (ViT) with Convolutional Neural Networks (CNN) in terms of inductive bias and sample efficiency.",
+    "domain": "Artificial Intelligence",
+    "stage": "AdvancedTechnical",
+    "difficulty": 4,
+    "expectedConcepts": ["Vision Transformers", "self-attention", "inductive bias", "sample efficiency", "patch embeddings"]
+  },
+  {
+    "id": "q-15",
+    "text": "How do modern two-stage object detectors (like Faster R-CNN) differ from single-stage detectors (like YOLO) in localization and speed tradeoffs?",
+    "domain": "Artificial Intelligence",
+    "stage": "AdvancedTechnical",
+    "difficulty": 3,
+    "expectedConcepts": ["object detection", "anchor boxes", "IoU", "non-maximum suppression", "bounding box regression"]
+  },
+  {
+    "id": "q-16",
+    "text": "How would you handle covariate shift or domain adaptation when a computer vision model trained on daytime imagery is deployed at night or in rain?",
+    "domain": "Artificial Intelligence",
+    "stage": "AdvancedTechnical",
+    "difficulty": 4,
+    "expectedConcepts": ["covariate shift", "domain adaptation", "adversarial training", "fine-tuning", "contrastive learning"]
+  },
+  {
+    "id": "q-17",
+    "text": "Explain self-supervised contrastive learning frameworks like SimCLR or MoCo and the role of InfoNCE loss.",
+    "domain": "Artificial Intelligence",
+    "stage": "AdvancedTechnical",
+    "difficulty": 4,
+    "expectedConcepts": ["contrastive learning", "positive pairs", "negative pairs", "InfoNCE loss", "representations"]
+  },
+  {
+    "id": "q-18",
+    "text": "How would you handle a missed project deadline?",
+    "domain": "Artificial Intelligence",
+    "stage": "Managerial",
+    "difficulty": 2,
+    "expectedConcepts": ["stakeholder communication", "risk mitigation", "pivot strategy", "root cause analysis", "timeline management"]
+  },
+  {
+    "id": "q-19",
+    "text": "Describe a scenario where you had a significant technical disagreement with a colleague regarding model selection or architecture. How did you resolve it?",
+    "domain": "Artificial Intelligence",
+    "stage": "Managerial",
+    "difficulty": 3,
+    "expectedConcepts": ["constructive communication", "empirical benchmarking", "objective criteria", "collaboration", "consensus"]
+  },
+  {
+    "id": "q-20",
+    "text": "As a Scientist B on an applied AI team, how do you balance long-term exploratory research with short-term engineering deliverables?",
+    "domain": "Artificial Intelligence",
+    "stage": "Managerial",
+    "difficulty": 3,
+    "expectedConcepts": ["prioritization", "milestone tracking", "time allocation", "deliverables", "stakeholder alignment"]
+  }
+]

@@ -1,0 +1,12 @@
+[
+  {
+    "id": "cand-001",
+    "name": "Dr. Aarav Sharma",
+    "skills": [
+      "Machine Learning",
+      "Computer Vision",
+      "Python"
+    ],
+    "appliedPost": "post-scientist-b-ai"
+  }
+]

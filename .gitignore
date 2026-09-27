@@ -1,0 +1,45 @@
+# Dependencies
+node_modules/
+*/node_modules/
+**/node_modules/
+
+# Production build outputs
+dist/
+*/dist/
+**/dist/
+build/
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# Python cache & virtual environments
+__pycache__/
+*/__pycache__/
+**/__pycache__/
+*.py[cod]
+*$py.class
+venv/
+.venv/
+env/
+
+# Uploads & temporary test artifacts
+server/uploads/*
+!server/uploads/.gitkeep
+server/test-dossier-output.pdf
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Database files
+server/data/*.db
+server/data/*.sqlite
+!server/data/.gitkeep
+
+# IDE & OS files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

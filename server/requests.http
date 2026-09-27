@@ -1,0 +1,104 @@
+### RACSim PSWB01 API Test Suite (REST Client)
+@baseUrl = http://localhost:5000/api
+@aiUrl = http://localhost:8000
+
+### 0. Health Checks
+GET {{baseUrl}}/health
+
+### 0b. AI Microservice Health
+GET {{aiUrl}}/health
+
+### 1. Auth: Candidate Login
+# @name candidateLogin
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "candidate@racsim.ai",
+  "password": "password123"
+}
+
+### 1b. Auth: Expert Login
+# @name expertLogin
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "expert@racsim.ai",
+  "password": "password123"
+}
+
+### 1c. Auth: Verify Current User (Token)
+GET {{baseUrl}}/auth/me
+Authorization: Bearer {{expertLogin.response.body.data.token}}
+
+### 2. Candidate: Upload & Parse CV (Extract Skills & Education)
+POST {{baseUrl}}/candidates/cand-001/resume
+Content-Type: application/json
+
+{
+  "resumeText": "Dr. Aarav Sharma. Ph.D. in Computer Science. 5+ years experience. Skills: Python, PyTorch, TensorFlow, Computer Vision, CNN, Vision Transformers, ViT, YOLO, Scikit-Learn, Docker, REST APIs, Git. Projects: Real-time autonomous object detection.",
+  "fileName": "aarav_sharma_cv.txt"
+}
+
+### 3. Posts: List Job Posts
+GET {{baseUrl}}/posts
+
+### 4. Questions: Recommend Questions based on Candidate Skills
+GET {{baseUrl}}/questions/recommend?candidateId=cand-001&stage=BasicTechnical&limit=3
+
+### 5. Board Room: Create Interview Session (Adaptive Mode ON)
+# @name createSession
+POST {{baseUrl}}/interviews
+Content-Type: application/json
+
+{
+  "candidateId": "cand-001",
+  "postId": "post-scientist-b-ai",
+  "level": "Intermediate",
+  "type": "Techno-Managerial",
+  "duration": 45,
+  "adaptiveMode": true,
+  "targetQuestionCount": 5
+}
+
+### 6. Board Room: Get Live Session State
+GET {{baseUrl}}/interviews/{{createSession.response.body.data.session.id}}
+
+### 7. Board Room: Submit Answer to Current Question
+# @name submitAnswer
+POST {{baseUrl}}/interviews/{{createSession.response.body.data.session.id}}/answers
+Content-Type: application/json
+
+{
+  "questionId": "q-01",
+  "answerText": "I completed my doctorate in Computer Vision focusing on localized feature representations and deep convolutional networks."
+}
+
+### 8. Board Room: Submit Expert Manual Scoring
+POST {{baseUrl}}/manual-score
+Content-Type: application/json
+
+{
+  "answerId": "{{submitAnswer.response.body.data.answerId}}",
+  "technicalKnowledge": 95,
+  "depthCompleteness": 90,
+  "communication": 95,
+  "consistency": 92,
+  "notes": "Excellent technical articulation of doctoral research."
+}
+
+### 9. Board Room: Adaptive Engine - Pull Next Question (Dynamically Leveled)
+POST {{baseUrl}}/interviews/{{createSession.response.body.data.session.id}}/next-question
+
+### 10. Board Room: Conclude Interview Session & Generate Report
+POST {{baseUrl}}/interviews/{{createSession.response.body.data.session.id}}/finish
+
+### 11. Report: Fetch Existing Report
+GET {{baseUrl}}/report/cand-001/post-scientist-b-ai
+
+### 12. Report: Download Printable Official PDF Evaluation Dossier
+GET {{baseUrl}}/report/cand-001/post-scientist-b-ai/pdf
+
+### 13. Admin: Consistency & Bias Audit Dashboard
+GET {{baseUrl}}/admin/audit/expert-consistency

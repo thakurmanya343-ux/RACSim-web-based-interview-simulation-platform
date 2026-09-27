@@ -1,0 +1,79 @@
+[
+  {
+    "id": "vac-ai-ml",
+    "title": "Senior AI & Computer Vision Engineer",
+    "domain": "AI / Machine Learning",
+    "requiredSkills": [
+      "Python",
+      "Machine Learning",
+      "Deep Learning",
+      "Computer Vision",
+      "PyTorch",
+      "TensorFlow",
+      "Docker"
+    ],
+    "level": "Senior"
+  },
+  {
+    "id": "vac-web-dev",
+    "title": "Full Stack React & Node.js Developer",
+    "domain": "Web Development",
+    "requiredSkills": [
+      "React",
+      "Node.js",
+      "Express",
+      "JavaScript",
+      "TypeScript",
+      "SQL",
+      "REST API",
+      "Tailwind CSS"
+    ],
+    "level": "Mid-Senior"
+  },
+  {
+    "id": "vac-data-analysis",
+    "title": "Lead Data Analyst & BI Specialist",
+    "domain": "Data Analysis",
+    "requiredSkills": [
+      "Python",
+      "Data Analysis",
+      "SQL",
+      "Pandas",
+      "NumPy",
+      "Data Visualization",
+      "Communication",
+      "Problem Solving"
+    ],
+    "level": "Mid-Level"
+  },
+  {
+    "id": "vac-project-mgmt",
+    "title": "Technical Project & Agile Delivery Manager",
+    "domain": "Project Management",
+    "requiredSkills": [
+      "Project Management",
+      "Agile",
+      "Communication",
+      "Team Leadership",
+      "Problem Solving",
+      "Time Management",
+      "System Design"
+    ],
+    "level": "Lead / Manager"
+  },
+  {
+    "id": "vac-junior-ml",
+    "title": "Junior Machine Learning & Data Associate",
+    "domain": "AI / Machine Learning",
+    "requiredSkills": [
+      "Python",
+      "Machine Learning",
+      "Scikit-Learn",
+      "Pandas",
+      "SQL",
+      "Communication",
+      "Git"
+    ],
+    "level": "Entry-Level"
+  }
+]
