@@ -15,8 +15,22 @@ import CandidateAuthModal from './components/CandidateAuthModal';
 import { UploadCloud, CheckCircle2, AlertCircle, Sparkles, Briefcase, Mic, Code2, BookOpen, BarChart3, Calendar, ArrowRight } from 'lucide-react';
 
 export default function App() {
+  // Dedicated Role & Port Detection:
+  // Port 3001 = Interviewer / Selector Console
+  // Port 3000 = Candidate Portal
+  const isInterviewerPort =
+    window.location.port === '3001' ||
+    import.meta.env.MODE === 'interviewer' ||
+    import.meta.env.VITE_APP_ROLE === 'interviewer' ||
+    new URLSearchParams(window.location.search).get('role') === 'interviewer';
+
+  const portalRole = isInterviewerPort ? 'interviewer' : 'candidate';
+
   // Current view: 'landing' | 'candidate' | 'interviewer' | 'boardroom' | 'coding' | 'questionbank' | 'audit'
-  const [currentView, setCurrentView] = useState('landing');
+  const [currentView, setCurrentView] = useState(() => {
+    if (isInterviewerPort) return 'interviewer';
+    return 'landing';
+  });
 
   // Candidate flow sub-state: 'upload' | 'analyzing' | 'skills' | 'recommendations'
   const [candidateState, setCandidateState] = useState('upload');
@@ -67,7 +81,17 @@ export default function App() {
   const [applications, setApplications] = useState([]);
 
   // Interviewer session & active Board Room session
-  const [interviewerSession, setInterviewerSession] = useState(null);
+  const [interviewerSession, setInterviewerSession] = useState(() => {
+    if (isInterviewerPort) {
+      return {
+        id: 'expert-01',
+        name: 'Dr. Vivek Kapoor',
+        role: 'interviewer',
+        designation: 'Chief Selector & Algorithm Expert'
+      };
+    }
+    return null;
+  });
   const [activeSessionId, setActiveSessionId] = useState(null);
 
   // Status toast
@@ -366,6 +390,55 @@ export default function App() {
         </div>
       )}
 
+      {/* Top Architecture Role & Port Banner */}
+      <div
+        style={{
+          background: isInterviewerPort ? '#1E3A2F' : '#111111',
+          color: '#FFFFFF',
+          padding: '8px 24px',
+          fontSize: '0.78rem',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          flexWrap: 'wrap',
+          gap: '8px',
+          borderBottom: '1px solid rgba(255, 255, 255, 0.12)'
+        }}
+      >
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+          <span className="pulse-dot-green" />
+          <span>
+            {isInterviewerPort ? (
+              <>
+                <strong>SELECTOR CONSOLE (PORT 3001):</strong> Live Interviewer Console • WebRTC Video Calling & Rubric Evaluation Active
+              </>
+            ) : (
+              <>
+                <strong>CANDIDATE PORTAL (PORT 3000):</strong> Candidate Application & Interview Simulation • WebRTC Video & STT Active
+              </>
+            )}
+          </span>
+        </div>
+
+        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+          <a
+            href={isInterviewerPort ? 'http://localhost:3000' : 'http://localhost:3001'}
+            target="_blank"
+            rel="noreferrer"
+            style={{
+              color: '#D6CEC0',
+              textDecoration: 'underline',
+              fontWeight: 600,
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '4px'
+            }}
+          >
+            {isInterviewerPort ? 'Open Candidate Portal (Port 3000) ↗' : 'Open Interviewer Console (Port 3001) ↗'}
+          </a>
+        </div>
+      </div>
+
       {/* Main Header & Clean Navbar (Requirement 1 & 2) */}
       <Navbar
         currentView={currentView}
@@ -374,6 +447,7 @@ export default function App() {
         candidateUser={candidateUser}
         hasScheduledInterview={Boolean(scheduledApp)}
         scheduledSessionId={activeSessionId}
+        portalRole={portalRole}
         onOpenCandidateAuth={(tab) => {
           setAuthModalTab(tab);
           setIsAuthModalOpen(true);
@@ -387,7 +461,7 @@ export default function App() {
         }}
         onInterviewerLogout={() => {
           setInterviewerSession(null);
-          setCurrentView('landing');
+          setCurrentView(isInterviewerPort ? 'interviewer' : 'landing');
           showToast('Logged out of selector portal.');
         }}
       />
@@ -502,78 +576,108 @@ export default function App() {
         {/* VIEW 2: CANDIDATE FLOW */}
         {currentView === 'candidate' && (
           <div className="container" style={{ padding: '30px 20px' }}>
-            {candidateState === 'upload' && (
+            {isInterviewerPort ? (
               <div style={{ maxWidth: '640px', margin: '40px auto' }}>
-                <div className="card" style={{ padding: '44px 36px', textAlign: 'center', boxShadow: 'var(--shadow-lg)' }}>
-                  <div className="upload-tray-circle">
-                    <UploadCloud size={28} />
-                  </div>
+                <div className="card" style={{ padding: '44px 36px', textAlign: 'center' }}>
                   <div style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', marginBottom: '8px' }}>
                     <span className="pulse-dot-green" />
                     <span style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--forest-green)', textTransform: 'uppercase', letterSpacing: '0.14em' }}>
-                      Candidate Dossier
+                      Port Isolation Active
                     </span>
                   </div>
-                  <h2 style={{ fontFamily: 'var(--font-serif)', fontSize: '2.2rem', fontWeight: 500, color: '#111111', marginBottom: '8px' }}>
-                    Upload Candidate CV
+                  <h2 style={{ fontFamily: 'var(--font-serif)', fontSize: '2rem', fontWeight: 500, color: '#111111', marginBottom: '12px' }}>
+                    Candidate Portal on Port 3000
                   </h2>
-                  <p style={{ fontSize: '0.92rem', color: '#57534E', marginBottom: '28px' }}>
-                    Upload your PDF or DOCX resume. The platform will dynamically extract technical skills and compute matching vacancies.
+                  <p style={{ fontSize: '0.92rem', color: '#57534E', marginBottom: '24px', lineHeight: 1.6 }}>
+                    This window is running the <strong>Selector Console (Port 3001)</strong>. Candidate application forms, CV parsing, and vacancy matching are hosted exclusively on Port 3000.
                   </p>
-
-                  <input
-                    type="file"
-                    id="candidate-file-input"
-                    style={{ display: 'none' }}
-                    accept=".pdf,.docx,.doc,.txt"
-                    onChange={(e) => {
-                      if (e.target.files && e.target.files.length > 0) {
-                        handleFileUpload(e.target.files[0]);
-                      }
-                    }}
-                  />
-
-                  <button
+                  <a
+                    href="http://localhost:3000"
+                    target="_blank"
+                    rel="noreferrer"
                     className="btn btn-primary"
-                    style={{ padding: '13px 32px', fontSize: '0.98rem' }}
-                    onClick={() => document.getElementById('candidate-file-input')?.click()}
+                    style={{ padding: '12px 28px', display: 'inline-flex', alignItems: 'center', gap: '6px' }}
                   >
-                    <UploadCloud size={18} /> Select CV Document ↗
-                  </button>
+                    Open Candidate Portal (Port 3000) ↗
+                  </a>
                 </div>
               </div>
-            )}
+            ) : (
+              <>
+                {candidateState === 'upload' && (
+                  <div style={{ maxWidth: '640px', margin: '40px auto' }}>
+                    <div className="card" style={{ padding: '44px 36px', textAlign: 'center', boxShadow: 'var(--shadow-lg)' }}>
+                      <div className="upload-tray-circle">
+                        <UploadCloud size={28} />
+                      </div>
+                      <div style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', marginBottom: '8px' }}>
+                        <span className="pulse-dot-green" />
+                        <span style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--forest-green)', textTransform: 'uppercase', letterSpacing: '0.14em' }}>
+                          Candidate Dossier
+                        </span>
+                      </div>
+                      <h2 style={{ fontFamily: 'var(--font-serif)', fontSize: '2.2rem', fontWeight: 500, color: '#111111', marginBottom: '8px' }}>
+                        Upload Candidate CV
+                      </h2>
+                      <p style={{ fontSize: '0.92rem', color: '#57534E', marginBottom: '28px' }}>
+                        Upload your PDF or DOCX resume. The platform will dynamically extract technical skills and compute matching vacancies.
+                      </p>
 
-            {candidateState === 'analyzing' && (
-              <CvAnalyzingState fileName={uploadingFileName} />
-            )}
+                      <input
+                        type="file"
+                        id="candidate-file-input"
+                        style={{ display: 'none' }}
+                        accept=".pdf,.docx,.doc,.txt"
+                        onChange={(e) => {
+                          if (e.target.files && e.target.files.length > 0) {
+                            handleFileUpload(e.target.files[0]);
+                          }
+                        }}
+                      />
 
-            {candidateState === 'skills' && (
-              <SkillTagsEditor
-                candidate={candidateProfile}
-                skills={candidateSkills}
-                onUpdateSkills={setCandidateSkills}
-                onUpdateCandidate={setCandidateProfile}
-                onProceed={handleCalculateRecommendations}
-              />
-            )}
+                      <button
+                        className="btn btn-primary"
+                        style={{ padding: '13px 32px', fontSize: '0.98rem' }}
+                        onClick={() => document.getElementById('candidate-file-input')?.click()}
+                      >
+                        <UploadCloud size={18} /> Select CV Document ↗
+                      </button>
+                    </div>
+                  </div>
+                )}
 
-            {candidateState === 'recommendations' && (
-              <JobRecommendations
-                candidate={candidateProfile}
-                skills={candidateSkills}
-                vacancies={scoredVacancies.length > 0 ? scoredVacancies : allVacancies}
-                appliedVacancyIds={appliedVacancyIds}
-                applications={applications}
-                onApply={handleApply}
-                onAcceptSchedule={handleAcceptInterview}
-                onEnterBoardRoom={(app) => {
-                  if (app?.sessionId) setActiveSessionId(app.sessionId);
-                  setCurrentView('boardroom');
-                }}
-                onBackToEdit={() => setCandidateState('skills')}
-                applicationConfirmation={applicationConfirmation}
-              />
+                {candidateState === 'analyzing' && (
+                  <CvAnalyzingState fileName={uploadingFileName} />
+                )}
+
+                {candidateState === 'skills' && (
+                  <SkillTagsEditor
+                    candidate={candidateProfile}
+                    skills={candidateSkills}
+                    onUpdateSkills={setCandidateSkills}
+                    onUpdateCandidate={setCandidateProfile}
+                    onProceed={handleCalculateRecommendations}
+                  />
+                )}
+
+                {candidateState === 'recommendations' && (
+                  <JobRecommendations
+                    candidate={candidateProfile}
+                    skills={candidateSkills}
+                    vacancies={scoredVacancies.length > 0 ? scoredVacancies : allVacancies}
+                    appliedVacancyIds={appliedVacancyIds}
+                    applications={applications}
+                    onApply={handleApply}
+                    onAcceptSchedule={handleAcceptInterview}
+                    onEnterBoardRoom={(app) => {
+                      if (app?.sessionId) setActiveSessionId(app.sessionId);
+                      setCurrentView('boardroom');
+                    }}
+                    onBackToEdit={() => setCandidateState('skills')}
+                    applicationConfirmation={applicationConfirmation}
+                  />
+                )}
+              </>
             )}
           </div>
         )}
@@ -586,6 +690,8 @@ export default function App() {
               initialSessionId={activeSessionId}
               interviewerSession={interviewerSession}
               onOpenReport={() => setCurrentView('audit')}
+              portalRole={portalRole}
+              onOpenCoding={() => setCurrentView('coding')}
             />
           </div>
         )}
@@ -600,14 +706,68 @@ export default function App() {
         {/* VIEW 5: QUESTION BANK & AI RECOMMENDER */}
         {currentView === 'questionbank' && (
           <div className="container" style={{ padding: '20px' }}>
-            <QuestionBankView candidate={candidateProfile} />
+            {!isInterviewerPort ? (
+              <div style={{ maxWidth: '640px', margin: '40px auto' }}>
+                <div className="card" style={{ padding: '44px 36px', textAlign: 'center' }}>
+                  <div style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', marginBottom: '8px' }}>
+                    <span className="pulse-dot-green" />
+                    <span style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--forest-green)', textTransform: 'uppercase', letterSpacing: '0.14em' }}>
+                      Restricted Selector Tool
+                    </span>
+                  </div>
+                  <h2 style={{ fontFamily: 'var(--font-serif)', fontSize: '1.9rem', color: '#111111', marginBottom: '10px' }}>
+                    Question Bank on Port 3001
+                  </h2>
+                  <p style={{ fontSize: '0.92rem', color: '#57534E', marginBottom: '20px' }}>
+                    Question bank administration and AI selector recommendations are accessible exclusively on Port 3001.
+                  </p>
+                  <a
+                    href="http://localhost:3001"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="btn btn-primary"
+                    style={{ padding: '10px 24px' }}
+                  >
+                    Open Selector Console (Port 3001) ↗
+                  </a>
+                </div>
+              </div>
+            ) : (
+              <QuestionBankView candidate={candidateProfile} />
+            )}
           </div>
         )}
 
         {/* VIEW 6: INTERVIEWER PORTAL */}
         {currentView === 'interviewer' && (
           <div className="container" style={{ padding: '20px' }}>
-            {!interviewerSession ? (
+            {!isInterviewerPort ? (
+              <div style={{ maxWidth: '640px', margin: '40px auto' }}>
+                <div className="card" style={{ padding: '44px 36px', textAlign: 'center' }}>
+                  <div style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', marginBottom: '8px' }}>
+                    <span className="pulse-dot-green" />
+                    <span style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--forest-green)', textTransform: 'uppercase', letterSpacing: '0.14em' }}>
+                      Port Isolation Active
+                    </span>
+                  </div>
+                  <h2 style={{ fontFamily: 'var(--font-serif)', fontSize: '2rem', fontWeight: 500, color: '#111111', marginBottom: '12px' }}>
+                    Selector Console on Port 3001
+                  </h2>
+                  <p style={{ fontSize: '0.92rem', color: '#57534E', marginBottom: '24px', lineHeight: 1.6 }}>
+                    This window is running the <strong>Candidate Portal (Port 3000)</strong>. Selector dashboards, custom question delivery, and rubric scorecards are restricted to Port 3001.
+                  </p>
+                  <a
+                    href="http://localhost:3001"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="btn btn-primary"
+                    style={{ padding: '12px 28px', display: 'inline-flex', alignItems: 'center', gap: '6px' }}
+                  >
+                    Open Selector Console (Port 3001) ↗
+                  </a>
+                </div>
+              </div>
+            ) : !interviewerSession ? (
               <InterviewerLogin
                 onLoginSuccess={(session) => {
                   setInterviewerSession(session);
