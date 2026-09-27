@@ -1,4 +1,6 @@
 const express = require('express');
+const http = require('http');
+const { Server } = require('socket.io');
 const cors = require('cors');
 const path = require('path');
 const { seedDatabase } = require('./db');
@@ -21,6 +23,13 @@ const audioRouter = require('./routes/audio');
 const { executeCode } = require('./services/executionService');
 
 const app = express();
+const server = http.createServer(app);
+const io = new Server(server, {
+  cors: {
+    origin: '*',
+    methods: ['GET', 'POST']
+  }
+});
 const PORT = process.env.PORT || 5000;
 
 // Middleware
@@ -133,11 +142,89 @@ app.use((err, req, res, next) => {
   });
 });
 
+// WebRTC Signaling & Live Board Room Socket Gateway
+io.on('connection', (socket) => {
+  console.log(`[Socket.io] Client connected: ${socket.id}`);
+
+  // Join Room
+  socket.on('join-room', ({ roomId, role, userName }) => {
+    socket.join(roomId);
+    socket.data = { roomId, role, userName };
+    console.log(`[Socket.io] Room [${roomId}]: ${userName || role} (${role}) connected via ${socket.id}`);
+
+    // Notify other peers in this room that a participant joined
+    socket.to(roomId).emit('user-joined', {
+      socketId: socket.id,
+      role,
+      userName: userName || (role === 'interviewer' ? 'Selector Board' : 'Candidate')
+    });
+  });
+
+  // WebRTC Signaling: Offer
+  socket.on('webrtc-offer', ({ roomId, sdp }) => {
+    socket.to(roomId).emit('webrtc-offer', {
+      from: socket.id,
+      role: socket.data?.role,
+      sdp
+    });
+  });
+
+  // WebRTC Signaling: Answer
+  socket.on('webrtc-answer', ({ roomId, sdp }) => {
+    socket.to(roomId).emit('webrtc-answer', {
+      from: socket.id,
+      role: socket.data?.role,
+      sdp
+    });
+  });
+
+  // WebRTC Signaling: ICE Candidate
+  socket.on('ice-candidate', ({ roomId, candidate }) => {
+    socket.to(roomId).emit('ice-candidate', {
+      from: socket.id,
+      candidate
+    });
+  });
+
+  // Real-Time Question Delivery Sync (Interviewer -> Candidate)
+  socket.on('sync-question', ({ roomId, question }) => {
+    console.log(`[Socket.io] Syncing question to candidate in room [${roomId}]: "${question?.text?.slice(0, 45)}..."`);
+    socket.to(roomId).emit('sync-question', { question });
+  });
+
+  // Real-Time STT Transcription Sync (Candidate -> Interviewer)
+  socket.on('sync-transcript', ({ roomId, transcript, isFinal }) => {
+    socket.to(roomId).emit('sync-transcript', { transcript, isFinal });
+  });
+
+  // Real-Time Live Pair Coding Sync
+  socket.on('sync-coding', ({ roomId, code, language }) => {
+    socket.to(roomId).emit('sync-coding', { code, language });
+  });
+
+  // Real-Time Session Status Sync (Start/Finish)
+  socket.on('sync-status', ({ roomId, status, report }) => {
+    socket.to(roomId).emit('sync-status', { status, report });
+  });
+
+  // Disconnection
+  socket.on('disconnect', () => {
+    console.log(`[Socket.io] Client disconnected: ${socket.id}`);
+    if (socket.data?.roomId) {
+      socket.to(socket.data.roomId).emit('user-left', {
+        socketId: socket.id,
+        role: socket.data.role
+      });
+    }
+  });
+});
+
 if (process.env.NODE_ENV !== 'test') {
-  app.listen(PORT, () => {
+  server.listen(PORT, () => {
     console.log(`=======================================================`);
     console.log(` Interview Simulation Backend running on port ${PORT}`);
     console.log(` Base API URL: http://localhost:${PORT}/api`);
+    console.log(` WebRTC Signaling Gateway: ws://localhost:${PORT}`);
     console.log(`=======================================================`);
   });
 }
