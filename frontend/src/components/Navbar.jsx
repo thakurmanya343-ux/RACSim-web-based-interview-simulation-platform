@@ -1,5 +1,5 @@
 import React from 'react';
-import { Star, Shield, LogOut, Code2, BookOpen, BarChart3, Mic, User, Calendar, ArrowUpRight } from 'lucide-react';
+import { Star, Shield, LogOut, Code2, BookOpen, BarChart3, Mic, User, Calendar, ArrowUpRight, Radio, ExternalLink } from 'lucide-react';
 
 export default function Navbar({
   currentView,
@@ -10,22 +10,20 @@ export default function Navbar({
   scheduledSessionId,
   onOpenCandidateAuth,
   onCandidateLogout,
-  onInterviewerLogout
+  onInterviewerLogout,
+  portalRole = 'candidate' // 'candidate' | 'interviewer'
 }) {
-  const simulationUnlocked = Boolean(
-    interviewerSession ||
-    hasScheduledInterview ||
-    currentView === 'boardroom' ||
-    currentView === 'coding' ||
-    currentView === 'questionbank' ||
-    currentView === 'audit'
-  );
+  const isInterviewer = portalRole === 'interviewer';
 
   return (
     <header className="app-header">
       <div className="container header-inner">
         {/* Brand Logo - The Recruitment Simulation Journal */}
-        <div className="logo-area" onClick={() => setCurrentView('landing')} title="Selector·Applicant">
+        <div
+          className="logo-area"
+          onClick={() => setCurrentView(isInterviewer ? 'interviewer' : 'landing')}
+          title="Selector·Applicant"
+        >
           <div className="logo-star-badge">
             <Star size={18} fill="#FFFFFF" color="#FFFFFF" />
           </div>
@@ -34,56 +32,107 @@ export default function Navbar({
               Selector<span>·</span>Applicant
             </div>
             <div className="logo-subtitle">
-              The Recruitment Simulation Journal
+              {isInterviewer ? 'Selector Board Console • Port 3001' : 'Candidate Portal • Port 3000'}
             </div>
           </div>
         </div>
 
-        {/* Center Navigation Links */}
+        {/* Center Navigation Links - STRICT ROLE SEPARATION */}
         <nav className="nav-links">
-          <button
-            className={`nav-link ${currentView === 'landing' ? 'active' : ''}`}
-            onClick={() => setCurrentView('landing')}
-          >
-            Home
-          </button>
-
-          <button
-            className={`nav-link ${currentView === 'candidate' ? 'active' : ''}`}
-            onClick={() => setCurrentView('candidate')}
-          >
-            Candidate
-          </button>
-
-          <button
-            className={`nav-link ${currentView === 'process' ? 'active' : ''}`}
-            onClick={() => {
-              if (currentView !== 'landing') setCurrentView('landing');
-              setTimeout(() => {
-                const el = document.getElementById('process-section');
-                if (el) el.scrollIntoView({ behavior: 'smooth' });
-              }, 100);
-            }}
-          >
-            Process
-          </button>
-
-          <button
-            className={`nav-link ${currentView === 'about' ? 'active' : ''}`}
-            onClick={() => {
-              if (currentView !== 'landing') setCurrentView('landing');
-              setTimeout(() => {
-                const el = document.getElementById('about-section');
-                if (el) el.scrollIntoView({ behavior: 'smooth' });
-              }, 100);
-            }}
-          >
-            About
-          </button>
-
-          {/* Conditional Simulation Tabs: Visible only when interview scheduled or active */}
-          {simulationUnlocked && (
+          {/* ============================================================== */}
+          {/* INTERVIEWER PORTAL NAVIGATION (PORT 3001)                      */}
+          {/* ============================================================== */}
+          {isInterviewer ? (
             <>
+              <button
+                className={`nav-link ${currentView === 'interviewer' ? 'active' : ''}`}
+                onClick={() => setCurrentView('interviewer')}
+                style={{ display: 'flex', alignItems: 'center', gap: '5px' }}
+              >
+                <Shield size={14} /> Selector Board
+              </button>
+
+              <button
+                className={`nav-link ${currentView === 'boardroom' ? 'active' : ''}`}
+                onClick={() => setCurrentView('boardroom')}
+                style={{ display: 'flex', alignItems: 'center', gap: '6px' }}
+              >
+                <Mic size={14} /> Live Board Room
+                <span
+                  style={{
+                    fontSize: '0.65rem',
+                    background: 'var(--forest-green)',
+                    color: '#ffffff',
+                    padding: '1px 6px',
+                    borderRadius: '999px',
+                    fontWeight: 700
+                  }}
+                >
+                  WebRTC
+                </span>
+              </button>
+
+              <button
+                className={`nav-link ${currentView === 'questionbank' ? 'active' : ''}`}
+                onClick={() => setCurrentView('questionbank')}
+                style={{ display: 'flex', alignItems: 'center', gap: '5px' }}
+              >
+                <BookOpen size={14} /> Question Bank
+              </button>
+
+              <button
+                className={`nav-link ${currentView === 'audit' ? 'active' : ''}`}
+                onClick={() => setCurrentView('audit')}
+                style={{ display: 'flex', alignItems: 'center', gap: '5px' }}
+              >
+                <BarChart3 size={14} /> Audit & PDF
+              </button>
+            </>
+          ) : (
+            /* ============================================================== */
+            /* CANDIDATE PORTAL NAVIGATION (PORT 3000)                        */
+            /* ============================================================== */
+            <>
+              <button
+                className={`nav-link ${currentView === 'landing' ? 'active' : ''}`}
+                onClick={() => setCurrentView('landing')}
+              >
+                Home
+              </button>
+
+              <button
+                className={`nav-link ${currentView === 'candidate' ? 'active' : ''}`}
+                onClick={() => setCurrentView('candidate')}
+              >
+                Candidate Dossier
+              </button>
+
+              <button
+                className={`nav-link ${currentView === 'process' ? 'active' : ''}`}
+                onClick={() => {
+                  if (currentView !== 'landing') setCurrentView('landing');
+                  setTimeout(() => {
+                    const el = document.getElementById('process-section');
+                    if (el) el.scrollIntoView({ behavior: 'smooth' });
+                  }, 100);
+                }}
+              >
+                Process
+              </button>
+
+              <button
+                className={`nav-link ${currentView === 'about' ? 'active' : ''}`}
+                onClick={() => {
+                  if (currentView !== 'landing') setCurrentView('landing');
+                  setTimeout(() => {
+                    const el = document.getElementById('about-section');
+                    if (el) el.scrollIntoView({ behavior: 'smooth' });
+                  }, 100);
+                }}
+              >
+                About
+              </button>
+
               <button
                 className={`nav-link ${currentView === 'boardroom' ? 'active' : ''}`}
                 onClick={() => setCurrentView('boardroom')}
@@ -96,20 +145,18 @@ export default function Navbar({
                 }}
               >
                 <Mic size={14} /> Board Room
-                {hasScheduledInterview && (
-                  <span
-                    style={{
-                      fontSize: '0.65rem',
-                      background: 'var(--forest-green)',
-                      color: '#ffffff',
-                      padding: '1px 7px',
-                      borderRadius: '999px',
-                      fontWeight: 700
-                    }}
-                  >
-                    Live
-                  </span>
-                )}
+                <span
+                  style={{
+                    fontSize: '0.65rem',
+                    background: 'var(--forest-green)',
+                    color: '#ffffff',
+                    padding: '1px 6px',
+                    borderRadius: '999px',
+                    fontWeight: 700
+                  }}
+                >
+                  Live
+                </span>
               </button>
 
               <button
@@ -119,41 +166,16 @@ export default function Navbar({
               >
                 <Code2 size={14} /> Coding Sandbox
               </button>
-
-              {interviewerSession && (
-                <button
-                  className={`nav-link ${currentView === 'questionbank' ? 'active' : ''}`}
-                  onClick={() => setCurrentView('questionbank')}
-                  style={{ display: 'flex', alignItems: 'center', gap: '5px' }}
-                >
-                  <BookOpen size={14} /> Question Bank
-                </button>
-              )}
-
-              <button
-                className={`nav-link ${currentView === 'audit' ? 'active' : ''}`}
-                onClick={() => setCurrentView('audit')}
-                style={{ display: 'flex', alignItems: 'center', gap: '5px' }}
-              >
-                <BarChart3 size={14} /> Audit & PDF
-              </button>
             </>
-          )}
-
-          {interviewerSession && (
-            <button
-              className={`nav-link ${currentView === 'interviewer' ? 'active' : ''}`}
-              onClick={() => setCurrentView('interviewer')}
-            >
-              Selector Board
-            </button>
           )}
         </nav>
 
         {/* Right Action CTAs */}
         <div className="nav-actions">
-          {interviewerSession ? (
-            /* Interviewer Session Active */
+          {/* ============================================================== */}
+          {/* INTERVIEWER ACTIONS                                            */}
+          {/* ============================================================== */}
+          {isInterviewer ? (
             <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
               <div
                 style={{
@@ -168,20 +190,40 @@ export default function Navbar({
               >
                 <Shield size={15} color="var(--forest-green)" />
                 <span style={{ fontSize: '0.84rem', fontWeight: 600, color: '#111111' }}>
-                  {interviewerSession.name}
+                  {interviewerSession?.name || 'Dr. Vivek Kapoor (Chief Selector)'}
+                </span>
+                <span style={{ fontSize: '0.68rem', background: 'var(--forest-green-bg)', color: 'var(--forest-green)', padding: '1px 6px', borderRadius: '4px', fontWeight: 700 }}>
+                  Port 3001
                 </span>
               </div>
-              <button
-                className="btn btn-secondary btn-sm"
-                onClick={onInterviewerLogout}
-                title="Log out from selector board"
+
+              {/* Portal Switcher Link */}
+              <a
+                href="http://localhost:3000"
+                target="_blank"
+                rel="noreferrer"
+                title="Open Candidate Portal on Port 3000 in new tab"
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '5px',
+                  fontSize: '0.78rem',
+                  color: '#57534E',
+                  textDecoration: 'none',
+                  padding: '6px 12px',
+                  borderRadius: 'var(--radius-full)',
+                  border: '1px solid var(--border)',
+                  background: '#FFFFFF',
+                  fontWeight: 600
+                }}
               >
-                <LogOut size={13} />
-                Logout
-              </button>
+                Candidate Port 3000 <ExternalLink size={12} />
+              </a>
             </div>
           ) : candidateUser ? (
-            /* Candidate User Logged In */
+            /* ============================================================== */
+            /* CANDIDATE LOGGED IN                                            */
+            /* ============================================================== */
             <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
               {hasScheduledInterview && (
                 <button
@@ -203,24 +245,13 @@ export default function Navbar({
                   borderRadius: 'var(--radius-full)'
                 }}
               >
-                {candidateUser.authProvider === 'google' ? (
-                  <svg width="15" height="15" viewBox="0 0 18 18">
-                    <path fill="#4285F4" d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.874 2.684-6.616z" />
-                    <path fill="#34A853" d="M9 18c2.43 0 4.467-.806 5.956-2.184l-2.908-2.258c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 0 0 9 18z" />
-                    <path fill="#FBBC05" d="M3.964 10.707c-.18-.54-.282-1.117-.282-1.707s.102-1.167.282-1.707V4.961H.957A8.996 8.996 0 0 0 0 9c0 1.452.348 2.827.957 4.039l3.007-2.332z" />
-                    <path fill="#EA4335" d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 0 0 .957 4.961L3.964 7.293C4.672 5.166 6.656 3.58 9 3.58z" />
-                  </svg>
-                ) : (
-                  <User size={15} color="var(--forest-green)" />
-                )}
+                <User size={15} color="var(--forest-green)" />
                 <span style={{ fontSize: '0.84rem', fontWeight: 600, color: '#111111' }}>
                   {candidateUser.name}
                 </span>
-                {candidateUser.authProvider === 'google' && (
-                  <span style={{ fontSize: '0.68rem', background: 'var(--forest-green-bg)', color: 'var(--forest-green)', padding: '1px 6px', borderRadius: '4px', fontWeight: 700 }}>
-                    Google Verified
-                  </span>
-                )}
+                <span style={{ fontSize: '0.68rem', background: 'var(--forest-green-bg)', color: 'var(--forest-green)', padding: '1px 6px', borderRadius: '4px', fontWeight: 700 }}>
+                  Port 3000
+                </span>
               </div>
               <button
                 className="btn btn-secondary btn-sm"
@@ -229,10 +260,35 @@ export default function Navbar({
               >
                 <LogOut size={13} />
               </button>
+
+              {/* Portal Switcher Link */}
+              <a
+                href="http://localhost:3001"
+                target="_blank"
+                rel="noreferrer"
+                title="Open Interviewer Console on Port 3001 in new tab"
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '5px',
+                  fontSize: '0.78rem',
+                  color: '#57534E',
+                  textDecoration: 'none',
+                  padding: '6px 12px',
+                  borderRadius: 'var(--radius-full)',
+                  border: '1px solid var(--border)',
+                  background: '#FFFFFF',
+                  fontWeight: 600
+                }}
+              >
+                Selector Port 3001 <ExternalLink size={12} />
+              </a>
             </div>
           ) : (
-            /* Public Navbar Matching Image */
-            <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
+            /* ============================================================== */
+            /* CANDIDATE NOT LOGGED IN                                        */
+            /* ============================================================== */
+            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
               <button
                 className="nav-login-link"
                 onClick={() => onOpenCandidateAuth('signin')}
@@ -246,6 +302,29 @@ export default function Navbar({
               >
                 Sign up <ArrowUpRight size={14} />
               </button>
+
+              {/* Portal Switcher Link */}
+              <a
+                href="http://localhost:3001"
+                target="_blank"
+                rel="noreferrer"
+                title="Open Interviewer Console on Port 3001 in new tab"
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '5px',
+                  fontSize: '0.78rem',
+                  color: '#57534E',
+                  textDecoration: 'none',
+                  padding: '6px 12px',
+                  borderRadius: 'var(--radius-full)',
+                  border: '1px solid var(--border)',
+                  background: '#FFFFFF',
+                  fontWeight: 600
+                }}
+              >
+                Selector Port 3001 <ExternalLink size={12} />
+              </a>
             </div>
           )}
         </div>
